@@ -7,7 +7,7 @@ import java.util.Locale.Category;
 
 
 
-// ------------------- CONSTRUCTOR ------------------------
+// ------------------- PARAMETERS ------------------------
 public class organizerWindow extends JFrame {
     private taskManager taskManager;
     private DefaultListModel<Task> TasksListModel;
@@ -18,6 +18,12 @@ public class organizerWindow extends JFrame {
     private JTextField DateField;
     private JTextArea NotesArea;
 
+    private final Color background = new Color(173, 216, 230);
+    private final Color buttonColor = new Color(70, 130, 180);
+    private final Font mainFont = new Font("Verdana", Font.PLAIN, 14);
+    private final Font boldFont = new Font("Segoe UI", Font.BOLD, 14);
+
+    // ------------------- CONSTRUCTOR ------------------------
     public organizerWindow() {
         taskManager = new taskManager();
         taskManager.loadTasksFromFile();
@@ -25,9 +31,11 @@ public class organizerWindow extends JFrame {
 
 
     setTitle("Desktop Organizer <3");
-    setSize(900, 700);
+    setSize(800, 700);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setLocationRelativeTo(null);
+
+     getContentPane().setBackground(background);
 
     createComponents();
     layoutComponents();
@@ -40,11 +48,24 @@ public class organizerWindow extends JFrame {
         TasksListModel = new DefaultListModel<>();
         TasksList = new JList<>(TasksListModel);
 
+        TasksList.setFont(mainFont);
+
 
         TitleField = new JTextField();
         CategoryField = new JTextField();
         DateField = new JTextField();
-        NotesArea = new JTextArea(4, 20);
+        NotesArea = new JTextArea(3, 20);
+
+        TitleField.setFont(mainFont);
+        CategoryField.setFont(mainFont);
+        DateField.setFont(mainFont);
+        NotesArea.setFont(mainFont);
+
+        TitleField.setBackground(Color.WHITE);
+        CategoryField.setBackground(Color.WHITE);
+        DateField.setBackground(Color.WHITE);
+        NotesArea.setBackground(Color.WHITE);
+
         NotesArea.setLineWrap(true);
         NotesArea.setWrapStyleWord(true);
 
@@ -64,10 +85,15 @@ public class organizerWindow extends JFrame {
     // ------------------- LAYOUTCOMPONENTS METHOD --------------------------
     private void layoutComponents() {
         JPanel bottomPanel = new JPanel(new BorderLayout(8, 8));
+        bottomPanel.setBackground(background);
+
         bottomPanel.add(Box.createVerticalStrut(10), BorderLayout.NORTH);
+
         JPanel inputPanel = new JPanel(new GridLayout(4, 2, 10, 8));
+        inputPanel.setBackground(background);
 
         inputPanel.add(new JLabel("Title: "));
+
         inputPanel.add(TitleField);
 
         inputPanel.add(new JLabel("Category: "));
@@ -79,7 +105,10 @@ public class organizerWindow extends JFrame {
         inputPanel.add(new JLabel("Notes: "));
         inputPanel.add(NotesArea);
 
+
+
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 15, 10));
+        buttonPanel.setBackground(background);
         
 
         JButton addButton = new JButton("Add Task: ");
@@ -97,6 +126,31 @@ public class organizerWindow extends JFrame {
         JButton editButton = new JButton("Edit Task");
         editButton.addActionListener(e -> editTask());
 
+        addButton.setFont(boldFont);
+        compButton.setFont(boldFont);
+        saveButton.setFont(boldFont);
+        deleteButton.setFont(boldFont);
+        editButton.setFont(boldFont);
+
+        addButton.setBackground(buttonColor);
+        compButton.setBackground(buttonColor);
+        saveButton.setBackground(buttonColor);
+        deleteButton.setBackground(buttonColor);
+        editButton.setBackground(buttonColor);
+
+        addButton.setForeground(Color.WHITE);
+        compButton.setForeground(Color.WHITE);
+        saveButton.setForeground(Color.WHITE);
+        deleteButton.setForeground(Color.WHITE);
+        editButton.setForeground(Color.WHITE);
+
+        addButton.setFocusPainted(false);
+        compButton.setFocusPainted(false);
+        saveButton.setFocusPainted(false);
+        deleteButton.setFocusPainted(false);
+        editButton.setFocusPainted(false);
+
+
         buttonPanel.add(addButton);
         buttonPanel.add(compButton);
         buttonPanel.add(saveButton);
@@ -107,7 +161,11 @@ public class organizerWindow extends JFrame {
         bottomPanel.add(inputPanel, BorderLayout.CENTER);
         bottomPanel.add(buttonPanel, BorderLayout.SOUTH);
 
-        add(new JScrollPane(TasksList), BorderLayout.CENTER);
+       JScrollPane scrollPane = new JScrollPane(TasksList);
+       scrollPane.setBackground(background);
+        scrollPane.getViewport().setBackground(background);
+        scrollPane.setBorder(BorderFactory.createEmptyBorder());
+        add(scrollPane, BorderLayout.CENTER);
 
 
         add(bottomPanel, BorderLayout.SOUTH);
@@ -223,7 +281,6 @@ private void AlertTasks(){
 
 }
 
-
 private void AlertifTaskDue(Task task){
      try{
          LocalDate today = LocalDate.now();
@@ -238,8 +295,6 @@ private void AlertifTaskDue(Task task){
             return;
 
      }
-
-    
 
 }
 
@@ -291,23 +346,5 @@ private void LoadSelectedTaskFields(){
 }
 
 
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-    
     
 }
