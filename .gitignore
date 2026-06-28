@@ -1,0 +1,16 @@
+# Compiled Java files
+*.class
+
+# Build folders
+bin/
+out/
+
+# Project-specific files
+task.txt
+
+# OS files
+.DS_Store
+
+# IDE settings
+.vscode/
+.idea/

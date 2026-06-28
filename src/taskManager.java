@@ -1,5 +1,9 @@
 package src;
 import java.util.ArrayList;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 
 public class taskManager {
@@ -21,7 +25,7 @@ public class taskManager {
 
 
     public void removeTasks(int index){
-        if(index >= 0 && index >= tasks.size()){
+        if(index >= 0 && index < tasks.size()){
             tasks.remove(index);
         }
 
@@ -46,5 +50,50 @@ public class taskManager {
         return tasks;
     }
 
+
+    public void saveTasks(){
+        try{
+        FileWriter fw = new FileWriter("task.txt");
+
+        for(Task tasks: tasks){
+            fw.write(tasks.toFileString() + "\n");
+        }
+
+        fw.close();
+    } catch(IOException ie){
+        System.out.println("Sorry! Could not save task :(");
+
+    }
+
+
+  }
+
+
+
+   public void loadTasksFromFile(){
+    try{
+        BufferedReader BR = new BufferedReader(new FileReader("task.txt"));
+
+        String line;
+
+        while((line = BR.readLine()) != null){
+            Task task = Task.StringFile(line);
+
+            if(task != null){
+                tasks.add(task);
+            }
+
+        }
+        BR.close();
+    } 
+    
+    catch(IOException ie){
+        System.out.println("Task not found :(");
+    }
+
+    
+        
+
+    }
     
 }
